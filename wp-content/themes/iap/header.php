@@ -9,10 +9,16 @@
 <body <?php body_class(); ?>>
 
     <div class="header">
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Despre noi</a></li>
-            <li><a href="#">Despre noi</a></li>
-            <li><a href="#">Despre noi</a></li>
-        </ul>
+        <div class="container">
+            <div class="header-inner">
+                <a class="header-logo" href="/"><img src="<?= get_template_directory_uri()?>/images/logo.png" /></a>
+                <ul class="header-menu">
+                    <li class="is-active"><a href="#">Home</a></li>
+                    <li><a href="#">What we do?</a></li>
+                    <li><a href="#">Prevention</a></li>
+                    <li><a href="#">Symptoms</a></li>
+                    <li><a href="#">Contact us</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
