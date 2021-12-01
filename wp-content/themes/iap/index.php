@@ -103,6 +103,7 @@
         </div>
     </div>
 </div>
+<!-- /Prevention -->
 
 <!-- Symptoms -->
 <div class="section">
