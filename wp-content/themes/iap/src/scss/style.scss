@@ -1,12 +1,17 @@
+@import 'base/var';
 @import 'base/reset';
 @import 'base/main';
 @import 'base/typography';
 @import 'base/media';
 @import 'base/form';
 
+@import 'vendor/responsive';
+
 @import 'layout/container';
 @import 'layout/header';
 @import 'layout/footer';
+@import 'layout/single';
+@import 'layout/blog';
 
 @import 'components/buttons';
 @import 'components/hero';

@@ -54,10 +54,51 @@ if (!function_exists('iap_setup') ) :
 				'menu' => __( 'Header', 'iap' ),
 			)
 		);
+
+        // Add support for featured image
+        add_theme_support('post-thumbnails');
+
+        // Set featured image size
+        set_post_thumbnail_size(343, 235, true);
     }
 endif;
 
 add_action( 'after_setup_theme', 'iap_setup' );
+
+/**
+ * Register widget area.
+ *
+ * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
+ */
+function iap_widgets_init() {
+	register_sidebar(
+		array(
+			'name'          => __( 'Sidebar', 'iap' ),
+			'id'            => 'sidebar',
+			'description'   => __( 'Add widgets here to appear in your footer.', 'iap' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
+}
+
+add_action( 'widgets_init', 'iap_widgets_init' );
+
+/**
+ * Filter the except length to 20 words.
+ *
+ * @link https://developer.wordpress.org/reference/functions/the_excerpt/
+ * @param int $length Excerpt length.
+ * @return int (Maybe) modified excerpt length.
+ */
+
+function iap_excerpt_length( $length ) {
+    return 15;
+}
+
+add_filter('excerpt_length', 'iap_excerpt_length', 999);
 
 
 /**
@@ -68,16 +109,6 @@ use Carbon_Fields\Block;
 use Carbon_Fields\Field;
 
 function iap_attach_gutenberg_blocks() {
-    Block::make('IAP Demo')
-        -> add_fields([
-            Field::make('text', 'iap_demo_title', __( 'Title' )),
-            Field::make('text', 'iap_demo_description', __( 'Description' )),
-        ])
-        -> set_render_callback( function( $fields, $attributes, $inner_blocks ) { ?>
-            <h1><?= $fields['iap_demo_title'] ?></h1>
-            <p><?= $fields['iap_demo_description'] ?></p>
-        <?php
-    });
 
     Block::make('IAP Hero')
         -> add_fields([
