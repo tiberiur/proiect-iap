@@ -1,0 +1,16 @@
+.footer {
+    background: #64CF83;
+    padding: 80px 0 45px;
+
+    &-inner {
+        display: flex;
+        justify-content: space-between;
+        font-size: 18px;
+        color: #FFF;
+    }
+
+    a {
+        color: #FFF;
+        text-decoration: none;
+    }
+}

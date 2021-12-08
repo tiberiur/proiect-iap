@@ -1,0 +1,27 @@
+.contact {
+    display: flex;
+    align-items: flex-start;
+    margin: 85px auto 0;
+    max-width: 930px;
+    &-info {
+        flex: 1;
+        &-item {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            p {
+                margin-left: 10px;
+            }
+            strong {
+                display: block;
+                font-weight: 400;
+            }
+            & + .contact-info-item {
+                margin-top: 45px;
+            }
+        }
+    }
+    &-form {
+        flex: 1;
+    }
+}

@@ -1,0 +1,41 @@
+.stats {
+    margin-top: 60px;
+    &-items {
+        list-style: none;
+        padding: 0 0 40px;
+        margin: 0;
+        background: #FFF;
+        border-radius: 24px;
+        box-shadow: 0px 0px 57px -7px rgba(119, 119, 119, 0.12);
+    }
+    &-item {
+        text-align: center;
+        padding-top: 40px;
+    }
+
+    p {
+        font-style: 20px;
+        color: #555555;
+        margin: 0;
+    }
+
+    strong {
+        margin: 10px 0;
+        font-size: 28px;
+        font-weight: 600;
+        color: #484848;
+        display: block;
+    }
+
+    span {
+        font-size: 18px;
+        color: #777;
+    }
+}
+
+@media screen and (min-width: 750px) {
+    .stats-items {
+        display: flex;
+        justify-content: space-around;
+    }
+}

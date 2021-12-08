@@ -1,0 +1,31 @@
+.form {
+
+}
+
+.field {
+    margin-bottom: 25px;
+}
+
+input,
+select,
+textarea {
+    background: #F4F4F4;
+    border: 2px solid #F4F4F4;
+    width: 100%;
+    border-radius: 12px;
+    font-size: 20px;
+    color: #777777;
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+}
+
+input,
+select {
+    height: 65px;
+    padding: 0 25px;
+}
+
+textarea {
+    padding: 20px 25px;
+    min-height: 150px;
+    resize: vertical;
+}
