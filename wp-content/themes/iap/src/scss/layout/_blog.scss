@@ -1,3 +1,14 @@
+.blog-row {
+    display: flex;
+    .blog-content {
+        flex: 1;
+    }
+    .blog-sidebar {
+        flex-basis: 300px;
+        padding-left: 40px;
+    }
+}
+
 .blog-card {
     background: #FFF;
     border-radius: 20px;
@@ -54,6 +65,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 30px;
+    font-size: 16px;
     &-content {
         padding: 20px 40px;
     }
@@ -71,6 +83,7 @@
         a {
             display: block;
             color: $text-color;
+            text-decoration: none;
             &:hover {
                 color: $brand-color;
             }
@@ -86,6 +99,7 @@
         align-items: center;
         color: $brand-color;
         margin-top: 25px;
+        text-decoration: none;
         &:hover {
             text-decoration: underline;
         }
@@ -93,10 +107,4 @@
             margin-left: 10px;
         }
     }
-}
-
-.blog-sidebar {
-    background: #FFF;
-    border-radius: 20px;
-    padding: 20px;
 }

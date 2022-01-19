@@ -5,9 +5,10 @@
  * Enqueue scripts and styles.
  */
 function iap_scripts() {
-    wp_enqueue_style( 'style', untrailingslashit( get_template_directory_uri() ) . '/style.css' );
     wp_enqueue_style( 'style-scss', untrailingslashit( get_template_directory_uri() ) . '/dist/css/style.css' );
     wp_enqueue_style( 'font-google', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap', false ); 
+
+	wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', array(), null, true);
 }
 add_action( 'wp_enqueue_scripts', 'iap_scripts' );
 
@@ -52,6 +53,7 @@ if (!function_exists('iap_setup') ) :
 		register_nav_menus(
 			array(
 				'menu' => __( 'Header', 'iap' ),
+                'new-position' => __( 'New position', 'iap' ),
 			)
 		);
 
@@ -82,6 +84,18 @@ function iap_widgets_init() {
 			'after_title'   => '</h2>',
 		)
 	);
+
+    register_sidebar(
+		array(
+			'name'          => __( 'Footer', 'iap' ),
+			'id'            => 'footer',
+			'description'   => __( 'Add widgets here to appear in your footer.', 'iap' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
 }
 
 add_action( 'widgets_init', 'iap_widgets_init' );
@@ -95,7 +109,7 @@ add_action( 'widgets_init', 'iap_widgets_init' );
  */
 
 function iap_excerpt_length( $length ) {
-    return 15;
+    return 14;
 }
 
 add_filter('excerpt_length', 'iap_excerpt_length', 999);
@@ -109,15 +123,14 @@ use Carbon_Fields\Block;
 use Carbon_Fields\Field;
 
 function iap_attach_gutenberg_blocks() {
-
-    Block::make('IAP Hero')
+    Block::make('IAP Hero New')
         -> add_fields([
             Field::make('text', 'iap_hero_subtitle', __( 'Subtitle' )),
             Field::make('text', 'iap_hero_title', __( 'Title' )),
-            Field::make('rich_text', 'iap_hero_content', __( 'Content' )),
-            Field::make('text', 'iap_hero_button', __( 'Button' )),
-            Field::make('text', 'iap_hero_url', __( 'Url' )),
-            Field::make( 'image', 'iap_hero_image', __( 'Imagine' ) ),
+            Field::make('rich_text', 'iap_hero_text', __( 'Text' )),
+            Field::make('text', 'iap_hero_button', __( 'Button text' )),
+            Field::make('text', 'iap_hero_link', __( 'Button link' )),
+            Field::make('image', 'iap_hero_image', __( 'Image' )),
             Field::make( 'checkbox', 'iap_hero_big', __( 'Big' ) ),
         ])
         -> set_render_callback( function( $fields, $attributes, $inner_blocks ) { ?>
@@ -128,7 +141,7 @@ function iap_attach_gutenberg_blocks() {
                             <?= wp_get_attachment_image( $fields['iap_hero_image'], 'full' ); ?>
                         </div>
                         <div class="hero-content">
-                            <?php if ($fields['iap_hero_subtitle']): ?>
+                            <?php if($fields['iap_hero_subtitle']): ?>
                             <p class="hero-sticker">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="#FF0000" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -137,8 +150,8 @@ function iap_attach_gutenberg_blocks() {
                             </p>
                             <?php endif ?>
                             <h2 class="hero-title"><?= $fields['iap_hero_title'] ?></h2>
-                            <div class="hero-description"><?= $fields['iap_hero_content'] ?></div>
-                            <a href="<?= $fields['iap_hero_url'] ?>" class="<?= $fields['iap_hero_big'] ? 'button' : 'button-secondary'?>"><?= $fields['iap_hero_button'] ?></a>
+                            <div class="hero-description"><?= $fields['iap_hero_text'] ?></div>
+                            <a href="<?= $fields['iap_hero_link'] ?>" class="<?= $fields['iap_hero_big'] ? 'button' : 'button-secondary' ?>"><?= $fields['iap_hero_button'] ?></a>
                         </div>
                     </div>
                 </div>
@@ -146,32 +159,32 @@ function iap_attach_gutenberg_blocks() {
         <?php
     });
 
-	Block::make('IAP Stats')
-		-> add_fields([
-			Field::make( 'complex', 'iap_stats', __( 'Stats' ) )
+    Block::make('IAP Stats New')
+        -> add_fields([
+            Field::make( 'complex', 'iap_stats', __( 'Cards' ) )
                 -> add_fields([
-                    Field::make( 'text', 'iap_stats_title', __( 'Title' ) ),
-                    Field::make( 'text', 'iap_stats_number', __( 'Number' ) ),
-                    Field::make( 'text', 'iap_stats_subtitle', __( 'Subtitle' ) ),
-                    Field::make( 'color', 'iap_stats_color', __( 'Color' ) )
-                ]),
-		])
-		-> set_render_callback( function( $fields, $attributes, $inner_blocks ) { ?>
+                    Field::make('text', 'iap_stats_title', __( 'Title' )),
+                    Field::make('text', 'iap_stats_number', __( 'Number' )),
+                    Field::make('text', 'iap_stats_subtitle', __( 'Subtitle' )),
+                    Field::make('color', 'iap_stats_color', __( 'Color' ))
+                ])
+        ])
+        -> set_render_callback( function( $fields, $attributes, $inner_blocks ) { ?>
             <div class="stats">
                 <div class="container">
                     <ul class="stats-items">
-                        <?php foreach ( $fields['iap_stats'] as $field ) :  ?>
+                        <?php foreach($fields['iap_stats'] as $field): ?>
                             <li class="stats-item">
                                 <p><?= $field['iap_stats_title'] ?></p>
-                                <strong style="color: <?= $field['iap_stats_color'] ?>"><?= $field['iap_stats_number'] ?></strong>
+                                <strong <?= $field['iap_stats_color'] ? 'style="color:'.$field['iap_stats_color'].'"' : '' ?>><?= $field['iap_stats_number'] ?></strong>
                                 <span><?= $field['iap_stats_subtitle'] ?></span>
                             </li>
-                        <?php endforeach; ?>
+                        <?php endforeach ?>
                     </ul>
                 </div>
             </div>
-		<?php
-	});
+        <?php
+    });
 
 	Block::make('IAP Section')
         -> add_fields([
